@@ -14,6 +14,7 @@ function cleanup {
 #Set function to run before script exit.
 trap cleanup EXIT
 
+#Set global variables
 PACKAGE='SSShot'
 DATA_DIR='/usr/bin/SSShot/'
 CONFIGAVAILABLE=0
@@ -24,10 +25,8 @@ GREEN='\e[1;32m'
 NC='\e[0m'
 VERBOSE=false
 
-#Fetch modules
-MODULES=${DATA_DIR}'modules/*'
-
 #Fetch Modules
+MODULES=${DATA_DIR}'modules/*'
 for path in ${MODULES}; do
     #Get base folder name
     dirname="$(basename "${path}")"
@@ -37,10 +36,11 @@ for path in ${MODULES}; do
     let MODULE_COUNT=$MODULE_COUNT+1
 done
 
+#Fetch flags and options.
 while test $# -gt 0; do
         case "$1" in
                 -h|--help)
-                        echo "${PACKAGE} - attempt to capture frames"
+                        echo "${PACKAGE} - take screenshots in Ubuntu"
                         echo " "
                         echo "${PACKAGE} [options] application [arguments]"
                         echo " "
@@ -83,20 +83,20 @@ source ${DATA_DIR}'ssshot.config'
 
 #Check if config was loaded.
 if [ $CONFIGAVAILABLE == 0 ]; then
-#No config loaded.
-    #Set and build error dialog.
-    echo -e "[${RED}ERROR${NC}] CONFIG COULD NOT BE LOADED! MAKE SURE THE CONFIG '${DATA_DIR}fpshot.config' EXISTS!"
-    exit 1;
+        #No config loaded.
+        echo -e "[${RED}ERROR${NC}] CONFIG COULD NOT BE LOADED! MAKE SURE THE CONFIG '${DATA_DIR}fpshot.config' EXISTS!"
+        exit 1;
 else
-    #Loaded, continue.
-	if ${VERBOSE}
-	then
+        #Loaded, continue.
+	if ${VERBOSE}; then
 		echo -e "[${GREEN}OK${NC}] Config loaded."
 	fi
 fi
 
 #Load Chosen Module
-if (( ${MODULE_COUNT} > 0))
-then source ${DATA_DIR}'modules/'${MODULE}
-else echo -e "[${RED}ERROR${NC}] MODULE COULD NOT BE LOADED! MAKE SURE THE MODULE '${DATA_DIR}modules/${MODULE}' EXISTS!"
+if (( ${MODULE_COUNT} > 0)); then
+        source ${DATA_DIR}'modules/'${MODULE}
+else
+        #Module not found
+        echo -e "[${RED}ERROR${NC}] MODULE COULD NOT BE LOADED! MAKE SURE THE MODULE '${DATA_DIR}modules/${MODULE}' EXISTS!"
 fi
