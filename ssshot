@@ -25,7 +25,7 @@ VERBOSE=false
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 #Fetch modules
-MODULES=(${DIR}/modules/*)
+MODULES=${DIR}'/modules/*'
 
 #Fetch Modules
 for path in ${DIR}/modules/*; do
