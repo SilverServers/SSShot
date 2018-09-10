@@ -15,6 +15,7 @@ function cleanup {
 trap cleanup EXIT
 
 PACKAGE='SSShot'
+DATA_DIR='/usr/bin/SSShot/'
 CONFIGAVAILABLE=0
 MODULE_COUNT=0
 RED='\e[1;31m'
@@ -22,10 +23,9 @@ YELLOW='\e[1;33m'
 GREEN='\e[1;32m'
 NC='\e[0m'
 VERBOSE=false
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 #Fetch modules
-MODULES=${DIR}'/modules/*'
+MODULES=${DATA_DIR}'modules/*'
 
 #Fetch Modules
 for path in ${MODULES}; do
@@ -79,13 +79,13 @@ while test $# -gt 0; do
 done
 
 #Load Config
-source "$DIR/ssshot.config"
+source ${DATA_DIR}'ssshot.config'
 
 #Check if config was loaded.
 if [ $CONFIGAVAILABLE == 0 ]; then
 #No config loaded.
     #Set and build error dialog.
-    echo -e "[${RED}ERROR${NC}] CONFIG COULD NOT BE LOADED! MAKE SURE THE CONFIG '${DIR}/fpshot.config' EXISTS!"
+    echo -e "[${RED}ERROR${NC}] CONFIG COULD NOT BE LOADED! MAKE SURE THE CONFIG '${DATA_DIR}fpshot.config' EXISTS!"
     exit 1;
 else
     #Loaded, continue.
@@ -97,6 +97,6 @@ fi
 
 #Load Chosen Module
 if (( ${MODULE_COUNT} > 0))
-then source "$DIR/modules/${MODULE}"
-else echo -e "[${RED}ERROR${NC}] MODULE COULD NOT BE LOADED! MAKE SURE THE MODULE '${DIR}/modules/${MODULE}' EXISTS!"
+then source ${DATA_DIR}'modules/'${MODULE}
+else echo -e "[${RED}ERROR${NC}] MODULE COULD NOT BE LOADED! MAKE SURE THE MODULE '${DATA_DIR}modules/${MODULE}' EXISTS!"
 fi
