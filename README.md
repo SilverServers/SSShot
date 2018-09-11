@@ -8,6 +8,7 @@ This is a simple, but modular/expandable utility to capture and share screenshot
 3. Start using it! `ssshot -h`
 
 I recommend using this utility with keyboard shortcuts.
+
 ![Keyboard Shortcuts](https://c.flm.pw/2018-09/Dbjux.png "Keyboard Shortcuts")
 
 ## Usage
