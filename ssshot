@@ -16,6 +16,7 @@ trap cleanup EXIT
 
 #Set global variables
 PACKAGE='SSShot'
+COMMAND=val=$(echo "${PACKAGE}" | awk '{print tolower($0)}')
 DATA_DIR='/usr/bin/SSShot/'
 CONFIGAVAILABLE=0
 MODULE_COUNT=0
@@ -42,7 +43,7 @@ while test $# -gt 0; do
                 -h|--help)
                         echo "${PACKAGE} - take screenshots in Ubuntu"
                         echo " "
-                        echo "${PACKAGE} [options] application [arguments]"
+                        echo "${COMMAND} [options] application [arguments]"
                         echo " "
                         echo "options:"
                         echo "-h, --help                show brief help"
