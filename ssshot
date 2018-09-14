@@ -16,7 +16,7 @@ trap cleanup EXIT
 
 #Set global variables
 PACKAGE='SSShot'
-COMMAND=val=$(echo "${PACKAGE}" | awk '{print tolower($0)}')
+COMMAND="${PACKAGE,,}"
 DATA_DIR='/usr/bin/SSShot/'
 CONFIGAVAILABLE=0
 MODULE_COUNT=0
@@ -32,7 +32,7 @@ for path in ${MODULES}; do
     #Get base folder name
     dirname="$(basename "${path}")"
     #Build servers array.
-    AVAILABLE_MODULES[$COUNTER]="$dirname"
+    AVAILABLE_MODULES[$MODULE_COUNT]="$dirname"
     #Increment counter.
     let MODULE_COUNT=$MODULE_COUNT+1
 done
