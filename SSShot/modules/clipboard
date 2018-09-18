@@ -1,0 +1,53 @@
+#!/bin/bash
+#SSShot
+
+#Capture clipboard
+
+if ${VERBOSE}
+then
+    echo -e "[RUNNING] Capturing clipboard...";
+fi
+
+mkdir -p ${SS_DIR}/${DATE}
+xclip -o -sel clip > ${SS_DIR}${DATE}/${IMG_ID}.txt
+
+if ${VERBOSE}
+then
+    echo -e "[${GREEN}OK${NC}] Capturing clipboard.";
+fi
+
+if ${UPLOAD_ON_CAPTURE}
+then
+    if ${VERBOSE}
+    then
+        echo -e "[RUNNING] Uploading to remote server...";
+    fi
+
+    ssh "${SERVER}" "mkdir -p ${SERVER_DEST}${DATE}" && scp -r "${SS_DIR}${DATE}/${IMG_ID}.txt" "${SERVER}:${SERVER_DEST}${DATE}"
+
+    if ${VERBOSE}
+    then
+        echo -e "[${GREEN}OK${NC}] Uploading to remote server.";
+    fi
+    
+    if ${COPY_CLIPBOARD}
+    then
+        echo ${SERVER_URL}${DATE}/${IMG_ID}.txt | xclip -selection c
+        
+        if ${VERBOSE}
+        then
+            echo -e "[${GREEN}OK${NC}] Copy remote URL to clipboard.";
+        fi
+    fi
+fi
+
+if ${VERBOSE}
+then
+    echo -e "[${GREEN}OK${NC}] Done!";
+fi
+
+if ${SHOW_NOTIFICATIONS}
+then
+    notify-send ${PACKAGE} "Clipboard Capture Complete!!" -t 5000 -c "transfer.complete"
+    echo $'\a'
+fi
