@@ -2,6 +2,12 @@
 
 This is a simple, but modular/expandable utility to capture and share screenshots on Ubuntu Desktop.
 
+## Required Dependencies
+These will be installed for you if not already installed.
+- xdotool
+- imagemagick
+- xclip
+
 ## Installation
 1. Run `install.sh` as a root/administrative user.
 2. Edit the config at `/usr/bin/SSShot/ssshot.config` (Only needed if you want to set up automatic remote server uploading, or change save paths etc. Everything is ready to go out of the box!).
